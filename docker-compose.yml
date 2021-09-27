@@ -3,6 +3,7 @@ services:
   proxy:
     depends_on:
       - client
+      - api
     restart: always
     build:
       context: ./proxy
@@ -14,3 +15,7 @@ services:
       context: ./services/client
     volumes:
       - ./services/client:/app
+  api:
+    build: ./services/server
+    volumes:
+      - ./services/server:/app
