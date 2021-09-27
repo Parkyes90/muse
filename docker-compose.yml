@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  proxy:
+    depends_on:
+      - client
+    restart: always
+    build:
+      context: ./proxy
+    ports:
+      - "3050:80"
+  client:
+    stdin_open: true
+    build:
+      context: ./services/client
+    volumes:
+      - ./services/client:/app
