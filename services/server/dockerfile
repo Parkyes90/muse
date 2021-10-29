@@ -1,21 +1,61 @@
-FROM python:3.9-slim
+FROM ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
 MAINTAINER parkyes90
-RUN pip install --upgrade pip
-RUN pip install pipenv
-WORKDIR /app
+
+# deps
+RUN apt-get update -y
+RUN apt-get install -y --no-install-recommends apt-utils
+
+RUN apt-get upgrade -y
+
+RUN apt-get install -y gcc postgresql-client python3.9-dev libc-dev libpq-dev locales \
+    software-properties-common python3.9 curl python3.9-distutils
+
+# locale
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
+
+# user
+RUN useradd -g users parkyes90 && \
+	rm -rf ~parkyes90 && \
+    cp -a ~root ~parkyes90 && \
+    mkdir ~parkyes90/work && \
+    chown -R parkyes90:users ~parkyes90 && \
+    echo "root:docker\$7" | chpasswd
+
+RUN chown -R parkyes90:users /home/parkyes90
+
+USER parkyes90
+ENV USER=parkyes90 \
+    HOME=/home/parkyes90
+WORKDIR $HOME/app
+ENV USER_BIN_PATH=${HOME}/.local/bin
+ENV PATH $PATH:${USER_BIN_PATH}
+
+# app deps
+
+RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
+
+RUN python3.9 /tmp/get-pip.py
+RUN python3.9 -m pip install --upgrade pip
+RUN python3.9 -m pip install pipenv
 
 COPY Pipfile* /tmp/
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y gcc postgresql-client python3-dev libc-dev libpq-dev
-RUN apt-get clean
-
 RUN cd /tmp && pipenv lock -d --requirements > requirements.txt
-RUN pip install -r /tmp/requirements.txt \
-    && rm -rf /root/.cache/pip
+RUN pip3 install -r /tmp/requirements.txt
 
-COPY . /app/
+COPY . $HOME/app
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Clean
+USER root
+RUN rm -rf /root/.cache/pip && apt-get clean
+
+# Run srever
+
+CMD ["python3.9", "manage.py", "runserver", "0.0.0.0:8000"]
