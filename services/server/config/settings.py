@@ -40,7 +40,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 THIRD_PARTY_APPS = ["channels"]
-LOCAL_APPS = []
+LOCAL_APPS = ["games"]
 
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
