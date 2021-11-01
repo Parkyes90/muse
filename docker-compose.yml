@@ -18,7 +18,7 @@ services:
   api:
     build: ./services/server
     volumes:
-      - ./services/server:/app
+      - ./services/server:/home/parkyes90/app
     depends_on:
       - redis
   redis:
