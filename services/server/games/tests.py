@@ -1,12 +1,9 @@
 from channels.routing import URLRouter
 from channels.testing import ChannelsLiveServerTestCase, WebsocketCommunicator
-from django.urls import re_path
 
-from games.consumers import GameConsumer
+from .routing import websocket_urlpatterns
 
-application = URLRouter(
-    [re_path(r"ws/games/(?P<room_name>\w+)/?$", GameConsumer.as_asgi())]
-)
+application = URLRouter(websocket_urlpatterns)
 
 
 class GameTests(ChannelsLiveServerTestCase):
