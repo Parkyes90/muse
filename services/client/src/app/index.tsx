@@ -10,7 +10,7 @@ function Index() {
   const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
     const socketInstance = new WebSocket(
-      `ws://${window.location.host}/ws/games/test/`
+      `ws://${window.location.host}/ws/games/test`
     );
     socketInstance.onmessage = (event) => {
       const data = JSON.parse(event.data);
