@@ -45,8 +45,8 @@ function Index() {
       </form>
       <div>
         socket State: {socketState}
-        {messages.map((message) => (
-          <div key={`${message}`}>{message.message}</div>
+        {messages.map((messageObj) => (
+          <div key={`${messageObj}`}>{messageObj.message}</div>
         ))}
       </div>
     </div>
