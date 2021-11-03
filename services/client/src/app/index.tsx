@@ -5,23 +5,23 @@ type Message = {
 };
 
 function Index() {
+  const [socketState, setSocketState] = useState(false);
   const [socket, setSocket] = useState<null | WebSocket>(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
     const socketInstance = new WebSocket(
-      `ws://${window.location.host}/ws/games/test`
+      `ws://${window.location.host}/ws/games/test`,
     );
     socketInstance.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
       setMessages((prev) => [...prev, data]);
     };
     socketInstance.onclose = () => {
-      console.log("Socket Closed");
+      setSocketState(false);
     };
     socketInstance.onopen = () => {
-      console.log("Socket Connected");
+      setSocketState(true);
     };
 
     setSocket(socketInstance);
@@ -31,7 +31,7 @@ function Index() {
     socket?.send(
       JSON.stringify({
         message,
-      })
+      }),
     );
   };
   return (
@@ -44,8 +44,9 @@ function Index() {
         />
       </form>
       <div>
-        {messages.map((message, index) => (
-          <div key={index}>{message.message}</div>
+        socket State: {socketState}
+        {messages.map((message) => (
+          <div key={`${message}`}>{message.message}</div>
         ))}
       </div>
     </div>
