@@ -1,0 +1,22 @@
+import React from "react";
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+
+const MainAppBar: React.FC = () => {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <LibraryMusicIcon />
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Muse
+        </Typography>
+        <Typography sx={{ flexGrow: 1 }}>
+          반주를 듣고 노래를 맞춰보세요!
+        </Typography>
+        <Button color="inherit">Login</Button>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default MainAppBar;
