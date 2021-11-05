@@ -1,10 +1,11 @@
 import React from "react";
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+import { AppBarProps } from "@mui/material/AppBar/AppBar";
 
-const MainAppBar: React.FC = () => {
+const MainAppBar: React.FC<AppBarProps> = (props) => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" {...props}>
       <Toolbar>
         <LibraryMusicIcon />
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
