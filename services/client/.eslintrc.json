@@ -5,9 +5,8 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint", "import", "prettier"],
   "extends": [
-    "prettier",
     "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
