@@ -1,5 +1,6 @@
 import React from "react";
-import { Grid, useTheme } from "@mui/material";
+import { Container, Grid, useTheme } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
 import MainAppBar from "../components/organisms/main-app-bar";
 import MainContent from "../components/organisms/main-content";
 
@@ -15,7 +16,12 @@ const App: React.FC = () => {
       }}
     >
       <MainAppBar sx={{ marginBottom: theme.typography.pxToRem(48) }} />
-      <MainContent />
+      <Container sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <Routes>
+          <Route path="/" element={<MainContent />} />
+          <Route path="/games/create" element={<div>Test</div>} />
+        </Routes>
+      </Container>
     </Grid>
   );
 };
