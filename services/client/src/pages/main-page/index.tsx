@@ -1,9 +1,9 @@
 import { Box, BoxProps, Button } from "@mui/material";
-import React from "react";
 import { Link } from "react-router-dom";
-import GameList from "../game-list";
+import React from "react";
+import GameList from "../../components/organisms/game-list";
 
-const MainContent: React.FC<BoxProps> = (props) => {
+const MainPage: React.FC<BoxProps> = (props) => {
   return (
     <Box {...props} sx={{ display: "flex", flexDirection: "column" }}>
       <Box sx={{ marginLeft: "auto" }}>
@@ -18,4 +18,4 @@ const MainContent: React.FC<BoxProps> = (props) => {
   );
 };
 
-export default MainContent;
+export default MainPage;

@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Grid, useTheme } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import MainAppBar from "../components/organisms/main-app-bar";
-import MainContent from "../components/organisms/main-content";
+import MainPage from "../pages/main-page";
 
 const App: React.FC = () => {
   const theme = useTheme();
@@ -18,7 +18,7 @@ const App: React.FC = () => {
       <MainAppBar sx={{ marginBottom: theme.typography.pxToRem(48) }} />
       <Container sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <Routes>
-          <Route path="/" element={<MainContent />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/games/create" element={<div>Test</div>} />
         </Routes>
       </Container>
