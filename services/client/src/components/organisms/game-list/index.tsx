@@ -10,7 +10,7 @@ import {
 import { grey } from "@mui/material/colors";
 import React from "react";
 
-const GameList = () => {
+const GameList: React.FC = () => {
   const theme = useTheme();
   return (
     <TableContainer
