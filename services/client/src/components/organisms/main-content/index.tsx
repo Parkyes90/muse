@@ -1,7 +1,7 @@
 import { Box, BoxProps, Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import GamesList from "../games-list";
+import GameList from "../game-list";
 
 const MainContent: React.FC<BoxProps> = (props) => {
   return (
@@ -13,7 +13,7 @@ const MainContent: React.FC<BoxProps> = (props) => {
           </Button>
         </Link>
       </Box>
-      <GamesList />
+      <GameList />
     </Box>
   );
 };

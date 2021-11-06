@@ -10,7 +10,7 @@ import {
 import { grey } from "@mui/material/colors";
 import React from "react";
 
-const GamesList = () => {
+const GameList = () => {
   const theme = useTheme();
   return (
     <TableContainer
@@ -38,4 +38,4 @@ const GamesList = () => {
   );
 };
 
-export default GamesList;
+export default GameList;
