@@ -3,13 +3,24 @@ import ReactDOM from "react-dom";
 import App from "app";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
+import GlobalStyles from "@mui/material/GlobalStyles";
+
 import reportWebVitals from "./reportWebVitals";
+
+const CustomGlobalStyles = () => (
+  <GlobalStyles
+    styles={{
+      a: { color: "inherit", textDecoration: "inherit" },
+    }}
+  />
+);
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
       <CssBaseline />
+      <CustomGlobalStyles />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root"),
