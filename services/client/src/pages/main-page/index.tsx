@@ -7,7 +7,7 @@ const MainPage: React.FC<BoxProps> = (props) => {
   return (
     <Box {...props} sx={{ display: "flex", flexDirection: "column" }}>
       <Box sx={{ marginLeft: "auto" }}>
-        <Link to="games/create">
+        <Link to="games/new">
           <Button type="button" variant="outlined" color="success">
             게임 만들기
           </Button>
