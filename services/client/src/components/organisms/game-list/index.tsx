@@ -15,9 +15,9 @@ const GameList: React.FC = () => {
   return (
     <TableContainer
       sx={{
-        marginTop: theme.typography.pxToRem(24),
-        padding: theme.typography.pxToRem(24),
-        border: `${theme.typography.pxToRem(1)} solid ${grey[300]}`,
+        mt: 3,
+        p: 3,
+        border: `${theme.spacing(1 / 8)} solid ${grey[300]}`,
       }}
     >
       <Table>
