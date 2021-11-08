@@ -37,7 +37,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
-THIRD_PARTY_APPS = ["channels"]
+THIRD_PARTY_APPS = ["channels", "rest_framework", "drf_yasg"]
 LOCAL_APPS = ["games"]
 
 
