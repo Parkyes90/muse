@@ -9,6 +9,7 @@ channels = "*"
 channels-redis = "*"
 djangorestframework = "*"
 drf-yasg = "*"
+django-extensions = "*"
 
 [dev-packages]
 
