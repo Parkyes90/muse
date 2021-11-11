@@ -37,7 +37,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
-THIRD_PARTY_APPS = ["channels", "rest_framework", "drf_yasg", "django_extensions"]
+THIRD_PARTY_APPS = ["channels", "rest_framework", "django_extensions", "drf_spectacular"]
 LOCAL_APPS = ["games", "core"]
 
 
@@ -148,4 +148,11 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Muse API",
+    "DESCRIPTION": "Muse API v1",
+    "VERSION": "1.0.0",
 }
