@@ -142,12 +142,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Rest framework
 REST_FRAMEWORK = {
-    "DEFAULT_PARSER_CLASSES": (
-        "rest_framework.parsers.FileUploadParser",
-        "rest_framework.parsers.JSONParser",
-        "rest_framework.parsers.FormParser",
-        "rest_framework.parsers.MultiPartParser",
-    ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
