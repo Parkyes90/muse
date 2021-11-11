@@ -8,6 +8,6 @@ class Game(TimeStampedModel):
 
 
 class GameFile(TimeStampedModel):
-    game = models.ForeignKey("games.Game", related_name="files", on_delete=models.CASCADE)
+    game = models.ForeignKey("games.Game", related_name="game_files", on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     file = models.FileField(upload_to="musics/")
