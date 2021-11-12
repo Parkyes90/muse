@@ -7,15 +7,21 @@ import {
   FormControl,
   FormHelperText,
   useTheme,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 import SaveIcon from "@mui/icons-material/Save";
 import { blue, grey } from "@mui/material/colors";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 import { bytesToSize } from "../../helpers/units";
+import { requestCreateGame } from "../../apis/requests";
+import { serializeFormData } from "../../helpers/serializers";
 
-interface FormData {
+interface FormData extends Record<string, string | FileList | null> {
   title: string;
   description: string;
   files: FileList | null;
@@ -34,9 +40,26 @@ const GameNewPage: React.FC = () => {
   });
   const theme = useTheme();
   watch("files");
+  const [status, setStatus] = useState({
+    open: false,
+    message: "",
+  });
+  const navigate = useNavigate();
   const files = useRef<HTMLInputElement | null>(null);
   const { ref: filesRef, ...filesRest } = register("files", { required: true });
-  const onSubmit = () => {};
+  const onSubmit = async (formData: FormData) => {
+    try {
+      const payload = serializeFormData(formData);
+      await requestCreateGame(payload);
+      navigate("/");
+      setStatus({ open: false, message: "" });
+    } catch (e: unknown) {
+      setStatus({
+        message: (e as AxiosError).response?.data?.join("\n"),
+        open: true,
+      });
+    }
+  };
   const formControlStyle = {
     mb: 2,
   };
@@ -44,6 +67,20 @@ const GameNewPage: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Snackbar
+        open={status.open}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setStatus((prev) => ({ ...prev, open: false }))}
+        autoHideDuration={6000}
+      >
+        <Alert
+          onClose={() => setStatus((prev) => ({ ...prev, open: false }))}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {status.message}
+        </Alert>
+      </Snackbar>
       <Paper sx={{ display: "flex", flexDirection: "column", p: 3 }}>
         <Box
           sx={{
@@ -86,6 +123,7 @@ const GameNewPage: React.FC = () => {
         <FormControl sx={formControlStyle}>
           <input
             type="file"
+            multiple
             style={{ display: "none" }}
             {...filesRest}
             ref={(e) => {
