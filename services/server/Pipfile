@@ -10,6 +10,7 @@ channels-redis = "*"
 djangorestframework = "*"
 django-extensions = "*"
 drf-spectacular = "*"
+djangorestframework-camel-case = "*"
 
 [dev-packages]
 
