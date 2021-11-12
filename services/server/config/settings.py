@@ -142,17 +142,26 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Rest framework
 REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": (
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+        "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
+        # Any other renders
+    ),
+    "DEFAULT_PARSER_CLASSES": (
+        "djangorestframework_camel_case.parser.CamelCaseFormParser",
+        "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+    ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    "TEST_REQUEST_DEFAULT_FORMAT": "json",
-    "TEST_REQUEST_RENDERER_CLASSES": [
-        "rest_framework.renderers.MultiPartRenderer",
-        "rest_framework.renderers.JSONRenderer",
-        "rest_framework.renderers.TemplateHTMLRenderer",
-    ],
 }
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Muse API",
     "DESCRIPTION": "Muse API v1",
     "VERSION": "1.0.0",
+    "CAMELIZE_NAMES": True,
+    "POSTPROCESSING_HOOKS": [
+        "drf_spectacular.hooks.postprocess_schema_enums",
+        "drf_spectacular.contrib.djangorestframework_camel_case.camelize_serializer_fields",
+    ],
 }
