@@ -14,6 +14,12 @@ class GameFileSerializer(serializers.ModelSerializer):
         fields = ["title", "file", "game"]
 
 
+class GameListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ["id", "title", "description"]
+
+
 class GameSerializer(serializers.ModelSerializer):
     game_files = GameFileSerializer(many=True, read_only=True)
     files = serializers.ListSerializer(child=serializers.FileField(), write_only=True, required=False)
