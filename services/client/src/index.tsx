@@ -4,8 +4,10 @@ import App from "app";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import GlobalStyles from "@mui/material/GlobalStyles";
-
+import { QueryClient, QueryClientProvider } from "react-query";
 import reportWebVitals from "./reportWebVitals";
+
+const queryClient = new QueryClient();
 
 const CustomGlobalStyles = () => (
   <GlobalStyles
@@ -17,11 +19,13 @@ const CustomGlobalStyles = () => (
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-      <CssBaseline />
-      <CustomGlobalStyles />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+        <CssBaseline />
+        <CustomGlobalStyles />
+      </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root"),
 );

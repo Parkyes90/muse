@@ -3,7 +3,13 @@
 // delete - delete
 // get - fetch
 
-export interface CreateGameResponse {
+export interface GameListItem {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface GameDetail extends GameListItem {
   id: number;
   title: string;
   description: string;
