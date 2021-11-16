@@ -15,7 +15,7 @@ jobs:
         shell: bash
         run: |
           git fetch origin master
-          git diff origin/master..HEAD^ services/server/migrations/* > diff
+          git diff origin/master origin/${GITHUB_HEAD_REF} -- services/server/migrations/* > diff
           echo "diff = "
           cat diff
 
