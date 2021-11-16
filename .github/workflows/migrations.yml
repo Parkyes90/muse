@@ -11,9 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: technote-space/get-diff-action@v5
-        with:
-          PATTERNS: services/server/migrations/*
+      - name: diff
+        shell: bash
+        run: |
+          git fetch origin master
+          git diff origin/master origin/${GITHUB_HEAD_REF} services/server/migrations/* > diff
+          echo "diff = "
+          cat diff
+
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
