@@ -17,6 +17,9 @@ jobs:
         run: |
           git fetch origin master
           DIFF=$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- services/server/migrations/*)
+          echo "DIFF<<EOF" >> $GITHUB_ENV
+          echo "$DIFF" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Print Diff
         run: echo ${{ env.DIFF }}
       - name: Slack Notification
