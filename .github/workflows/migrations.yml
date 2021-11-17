@@ -1,8 +1,8 @@
 name: migrations
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types:
+      - opened
     paths:
       - 'services/server/migrations/*'
 jobs:
