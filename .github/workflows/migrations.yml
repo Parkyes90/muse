@@ -9,8 +9,6 @@ jobs:
   slackNotifications:
     name: Slack Notification
     runs-on: ubuntu-latest
-    outputs:
-      all: ${{ steps.changes.outputs.all }}
     steps:
       - uses: actions/checkout@v2
       - name: Get changed files
@@ -19,7 +17,7 @@ jobs:
         run: |
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
       - name: echo
-        run: echo ${{ outputs.all }}
+        run: echo ${{ steps.changes.outputs.all }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
