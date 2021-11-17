@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
       - name: echo
-        run: echo ${{ ouputs.all }}
+        run: echo ${{ outputs.all }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
