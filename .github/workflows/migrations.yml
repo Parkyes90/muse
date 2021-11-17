@@ -24,4 +24,4 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_TEST_WEB_HOOK }}
           SLACK_USERNAME: RailsMigrationBot
           SLACK_TITLE: Message
-          SLACK_MESSAGE: 'Rails Migration Changed. 변경점은 해당 커밋을 참고해주세요.'
+          SLACK_MESSAGE: 'Rails Migration Changed. ${{ steps.changes.outputs.all }}'
