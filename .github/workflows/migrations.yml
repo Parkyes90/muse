@@ -2,7 +2,7 @@ name: migrations
 on:
   push:
     branches:
-      - '*'
+      - master
     paths:
       - 'services/server/migrations/*'
 jobs:
