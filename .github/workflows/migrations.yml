@@ -15,6 +15,7 @@ jobs:
         id: changes
         # Set outputs using the command.
         run: |
+          git fetch origin master
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
       - name: echo
         run: echo ${{ steps.changes.outputs.all }}
