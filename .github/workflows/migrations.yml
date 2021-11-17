@@ -16,7 +16,7 @@ jobs:
         # Set outputs using the command.
         run: |
           git fetch origin master
-          echo "::set-output name=all::$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.sha }})"
+          echo "::set-output name=all::$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- services/server/migrations/* | xargs)"
       - name: echo
         run: echo ${{ steps.changes.outputs.all }}
       - name: Slack Notification
