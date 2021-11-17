@@ -20,8 +20,6 @@ jobs:
           echo "DIFF<<EOF" >> $GITHUB_ENV
           echo "$DIFF" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-      - name: Print Diff
-        run: echo ${{ env.DIFF }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
