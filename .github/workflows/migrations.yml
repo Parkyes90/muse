@@ -16,13 +16,13 @@ jobs:
         # Set outputs using the command.
         run: |
           git fetch origin master
-          echo "::set-output name=all::$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- services/server/migrations/* | xargs)"
-      - name: echo
-        run: echo ${{ steps.changes.outputs.all }}
+          DIFF=$(git diff ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- services/server/migrations/*)
+      - name: Print Diff
+        run: echo ${{ env.DIFF }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_TEST_WEB_HOOK }}
           SLACK_USERNAME: RailsMigrationBot
           SLACK_TITLE: Message
-          SLACK_MESSAGE: 'Rails Migration Changed. ${{ steps.changes.outputs.all }}'
+          SLACK_MESSAGE: ${{ env.DIFF }}
