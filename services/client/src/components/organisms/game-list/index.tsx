@@ -1,18 +1,27 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  useTheme,
-} from "@mui/material";
+import { TableContainer, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
+import { Column } from "react-table";
 import { requestFetchGames } from "../../../apis/requests";
 import { GameListItem } from "../../../apis/types";
+import MaterialTableFactory from "../material-table";
+
+const columns: ReadonlyArray<Column> = [
+  {
+    Header: "게임",
+    accessor: "title",
+  },
+  {
+    Header: "설명",
+    accessor: "description",
+  },
+  {
+    Header: "참가 인원 수",
+    accessor: "count",
+  },
+];
 
 const GameList: React.FC = () => {
   const theme = useTheme();
@@ -20,6 +29,7 @@ const GameList: React.FC = () => {
     "game-list",
     requestFetchGames,
   );
+  const MaterialTable = MaterialTableFactory();
 
   if (error) {
     return <div>{error.message}</div>;
@@ -36,34 +46,7 @@ const GameList: React.FC = () => {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>게임</TableCell>
-              <TableCell>설명</TableCell>
-              <TableCell>참가 인원 수</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data?.map((datum) => {
-              return (
-                <TableRow
-                  key={datum.id}
-                  sx={{
-                    cursor: "pointer",
-                    ":hover": {
-                      bgcolor: grey[300],
-                    },
-                  }}
-                >
-                  <TableCell>{datum.title}</TableCell>
-                  <TableCell>{datum.description}</TableCell>
-                  <TableCell>0</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <MaterialTable data={data!} columns={columns} />
       )}
     </TableContainer>
   );
