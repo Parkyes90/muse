@@ -1,11 +1,11 @@
-import { TableContainer, useTheme } from "@mui/material";
+import { TableContainer, useTheme, Pagination } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { Column } from "react-table";
 import { requestFetchGames } from "../../../apis/requests";
-import { GameListItem } from "../../../apis/types";
+import { GameListItem, PaginationResponse } from "../../../apis/types";
 import MaterialTableFactory from "../material-table";
 
 const columns: ReadonlyArray<Column> = [
@@ -25,14 +25,19 @@ const columns: ReadonlyArray<Column> = [
 
 const GameList: React.FC = () => {
   const theme = useTheme();
-  const { data, isLoading, error } = useQuery<GameListItem[], AxiosError>(
-    "game-list",
-    requestFetchGames,
-  );
+  const [page, setPage] = useState(1);
+  const { data, isLoading, error } = useQuery<
+    PaginationResponse<GameListItem>,
+    AxiosError
+  >(`game-list-${page}`, () => requestFetchGames(page));
   const MaterialTable = MaterialTableFactory();
 
   if (error) {
     return <div>{error.message}</div>;
+  }
+
+  if (isLoading || !data) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -40,14 +45,26 @@ const GameList: React.FC = () => {
       sx={{
         mt: 3,
         p: 3,
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
         border: `${theme.spacing(1 / 8)} solid ${grey[300]}`,
       }}
     >
-      {isLoading ? (
-        <div>Loading....</div>
-      ) : (
-        <MaterialTable data={data!} columns={columns} />
-      )}
+      <MaterialTable data={data.results} columns={columns} />
+      <Pagination
+        count={data.totalPages}
+        page={page}
+        onChange={(e, newPage) => setPage(newPage)}
+        color="primary"
+        hideNextButton={!data.next}
+        hidePrevButton={!data.previous}
+        sx={{
+          mt: "auto",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      />
     </TableContainer>
   );
 };

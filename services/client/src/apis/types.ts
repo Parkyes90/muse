@@ -3,6 +3,14 @@
 // delete - delete
 // get - fetch
 
+export interface PaginationResponse<T> {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  totalPages: number;
+  results: T[];
+}
+
 export interface GameListItem {
   id: number;
   title: string;

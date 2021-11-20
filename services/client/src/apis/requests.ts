@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { GameListItem, GameDetail } from "./types";
+import { GameListItem, GameDetail, PaginationResponse } from "./types";
 
 const BASE_URL = "/api/games/";
 
@@ -13,7 +13,13 @@ export const requestCreateGame = async (
   });
 };
 
-export const requestFetchGames = async (): Promise<GameListItem[]> => {
-  const { data } = await axios.get(BASE_URL);
+export const requestFetchGames = async (
+  page: number,
+): Promise<PaginationResponse<GameListItem>> => {
+  const { data } = await axios.get(BASE_URL, {
+    params: {
+      page,
+    },
+  });
   return data;
 };
