@@ -21,6 +21,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/games/new" element={<GameNewPage />} />
+          <Route path="/games/:gameId" element={<GameNewPage />} />
         </Routes>
       </Container>
     </Grid>

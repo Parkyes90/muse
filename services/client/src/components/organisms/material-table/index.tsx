@@ -6,14 +6,31 @@ import {
   TableBody,
 } from "@mui/material";
 import React from "react";
-import { TableOptions, useTable } from "react-table";
+import { Row, TableOptions, useTable } from "react-table";
+import { grey } from "@mui/material/colors";
+
+interface MaterialTableProps<D extends object> extends TableOptions<D> {
+  isHoverStyle?: boolean;
+  onRowClick?: (row: Row<D>) => void;
+}
 
 const MaterialTableFactory = <D extends object>() => {
-  const Instance: React.FC<TableOptions<D>> = ({ columns, data }) => {
+  const Instance: React.FC<MaterialTableProps<D>> = ({
+    columns,
+    data,
+    isHoverStyle,
+    onRowClick,
+  }) => {
     const { getTableProps, headerGroups, rows, prepareRow } = useTable({
       columns,
       data,
     });
+    const hoverStyle = isHoverStyle
+      ? {
+          bgcolor: grey[200],
+          cursor: "pointer",
+        }
+      : undefined;
     return (
       <Table {...getTableProps}>
         <TableHead>
@@ -31,7 +48,13 @@ const MaterialTableFactory = <D extends object>() => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <TableRow {...row.getRowProps()}>
+              <TableRow
+                {...row.getRowProps()}
+                onClick={() => onRowClick!(row)}
+                sx={{
+                  ":hover": hoverStyle,
+                }}
+              >
                 {row.cells.map((cell) => {
                   return (
                     <TableCell {...cell.getCellProps()}>
@@ -45,6 +68,10 @@ const MaterialTableFactory = <D extends object>() => {
         </TableBody>
       </Table>
     );
+  };
+  Instance.defaultProps = {
+    isHoverStyle: true,
+    onRowClick: () => {},
   };
 
   return Instance;

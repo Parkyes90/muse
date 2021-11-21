@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
 import { Column } from "react-table";
+import { useNavigate } from "react-router-dom";
 import { requestFetchGames } from "../../../apis/requests";
 import { GameListItem, PaginationResponse } from "../../../apis/types";
 import MaterialTableFactory from "../material-table";
@@ -25,6 +26,7 @@ const columns: ReadonlyArray<Column> = [
 
 const GameList: React.FC = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const { data, isLoading, error } = useQuery<
     PaginationResponse<GameListItem>,
@@ -51,7 +53,13 @@ const GameList: React.FC = () => {
         border: `${theme.spacing(1 / 8)} solid ${grey[300]}`,
       }}
     >
-      <MaterialTable data={data.results} columns={columns} />
+      <MaterialTable
+        data={data.results}
+        columns={columns}
+        onRowClick={(row) => {
+          navigate(`/games/${row.id}`);
+        }}
+      />
       <Pagination
         count={data.totalPages}
         page={page}
