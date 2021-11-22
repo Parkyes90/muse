@@ -23,3 +23,8 @@ export const requestFetchGames = async (
   });
   return data;
 };
+
+export const requestFetchGame = async (id: number): Promise<GameDetail> => {
+  const { data } = await axios.get(`${BASE_URL}${id}/`);
+  return data;
+};
