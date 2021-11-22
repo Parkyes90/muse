@@ -9,7 +9,7 @@ import { requestFetchGames } from "../../../apis/requests";
 import { GameListItem, PaginationResponse } from "../../../apis/types";
 import MaterialTableFactory from "../material-table";
 
-const columns: ReadonlyArray<Column> = [
+const columns: ReadonlyArray<Column<GameListItem>> = [
   {
     Header: "게임",
     accessor: "title",
@@ -17,10 +17,6 @@ const columns: ReadonlyArray<Column> = [
   {
     Header: "설명",
     accessor: "description",
-  },
-  {
-    Header: "참가 인원 수",
-    accessor: "count",
   },
 ];
 
@@ -32,7 +28,7 @@ const GameList: React.FC = () => {
     PaginationResponse<GameListItem>,
     AxiosError
   >(`game-list-${page}`, () => requestFetchGames(page));
-  const MaterialTable = MaterialTableFactory();
+  const MaterialTable = MaterialTableFactory<GameListItem>();
 
   if (error) {
     return <div>{error.message}</div>;
@@ -57,7 +53,7 @@ const GameList: React.FC = () => {
         data={data.results}
         columns={columns}
         onRowClick={(row) => {
-          navigate(`/games/${row.id}`);
+          navigate(`/games/${row.original.id}`);
         }}
       />
       <Pagination
