@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import GameNewPage from "pages/game-new-page";
 import MainAppBar from "../components/organisms/main-app-bar";
 import MainPage from "../pages/main-page";
+import GameDetailPage from "../pages/game-detail-page";
 
 const App: React.FC = () => {
   const theme = useTheme();
@@ -21,7 +22,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/games/new" element={<GameNewPage />} />
-          <Route path="/games/:gameId" element={<GameNewPage />} />
+          <Route path="/games/:gameId" element={<GameDetailPage />} />
         </Routes>
       </Container>
     </Grid>
